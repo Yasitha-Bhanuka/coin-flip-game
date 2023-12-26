@@ -18,16 +18,26 @@
   </button>
   <script>
     
-    
+    const score = {
+      wins: 0,
+      loses: 0
+    };
     
     function playGame(guess){
       
       const move = Math.random();
       const comResult = (move < 0.5) ? 'heads' : 'tails';
       
-      console.log( guess === comResult ? 'You win!' : 'You lose!');
+      const result = ( guess === comResult ? 'You win!' : 'You lose!');
 
-    }
+      console.log(result);
+
+      (result === 'You win!') ? score.wins++ : score.loses++;
+
+      console.log(score);
+
+    };
+
   </script>
 </body>
 </html>
