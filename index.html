@@ -4,39 +4,110 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>coin flip game</title>
+  <style>
+    body{
+      background-color: brown;
+    }
+
+    .imagediv{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      top: 30px;
+    }
+
+    .container{
+      display: flex;
+      flex-direction: row;
+      gap: 14px;
+      position: relative;
+      justify-content: center;
+      top: 60px;
+    }
+
+    button{
+      background-color: blueviolet;
+      padding: 14px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      color: white;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-size: 18px;
+      width: 200px;
+      box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.4),
+               0px 1px 2px rgba(0, 0, 0, 0.2) inset;
+      transition: background-color 0.25s, color 0.25s;
+    }
+
+    button:hover{
+      background-color: aqua;
+      color: black;
+    }
+  
+  </style>
+
 </head>
 <body>
-  <button onclick="
-    playGame('heads');
-    ">
-    heads
-  </button>
-  <button onclick="
-    playGame('tails');
-    ">
-    tails
-  </button>
+  <div class="imagediv">
+    <img src="image/heads-or-tails.svg" alt="heads or tails">
+  </div>
+  <div class="container">
+    <button class="headbtn" onclick="
+      playGame('heads');
+    
+      ">
+      heads
+    </button>
+    <button class="tailbtn" onclick="
+      playGame('tails');
+      
+      ">
+      tails
+    </button>
+  
+    <button class="resetbtn" onclick="
+      localStorage.removeItem('score');
+      alert('Reset score');
+      score = {
+          wins: 0,
+          losses: 0
+        };
+      console.log(score);
+      ">
+      reset
+    </button>
+  </div>
+  
   <script>
     
-    const score = {
-      wins: 0,
-      loses: 0
-    };
-    
-    function playGame(guess){
-      
-      const move = Math.random();
-      const comResult = (move < 0.5) ? 'heads' : 'tails';
-      
-      const result = ( guess === comResult ? 'You win!' : 'You lose!');
+    // We can use const here since score is a reference
+      // so we can modify it even if it uses const.
+      let score = JSON.parse(localStorage.getItem('score')) || {
+        wins: 0,
+        losses: 0
+      };
 
-      console.log(result);
+      function playGame(guess) {
 
-      (result === 'You win!') ? score.wins++ : score.loses++;
+        const randomNumber = Math.random();
 
-      console.log(score);
+        const result = randomNumber < 0.5 ? 'heads' : 'tails';
 
-    };
+        console.log(guess === result ? 'You win!' : 'You lose!');
+
+        if (guess === result) {
+          score.wins++;
+        } else {
+          score.losses++;
+        }
+
+        console.log(score);
+
+        localStorage.setItem('score', JSON.stringify(score));
+
+      }
 
   </script>
 </body>
